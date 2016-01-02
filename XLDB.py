@@ -9,20 +9,34 @@
   #  break
 
 from os import listdir
-from os.path import isfile, join
-currdir = 'C:/Users/Jason/Games/Atari800WinPLus/Games'
-#currdir = 'C:/Users/jasong.MARTRON/Games/Atari800WinPLus/Games'
-files = listdir(currdir)
+from os.path import isfile, join, dirname
+workdir = dirname(__file__)
+ataridir = 'C:/Users/Jason/Games/Atari800WinPLus/Games'
+#ataridir = 'C:/Users/jasong.MARTRON/Games/Atari800WinPLus/Games'
+
+files = listdir(ataridir)
 i=0
-print(files[0:3])
+
+data = open(join(workdir, 'DataDump.csv'), 'w')
+
+
+dirs = []
 for f in files:
-    if isfile(join(currdir, f)):
-        print('File: ' + f)
-    else:
-        print('Dir : ' + f)
-    
+    currf = join(ataridir, f)
+    if isfile(currf):
+        file = open(currf, 'rb')
+        first71 = str(file.read(71))
+        
+        towrite = '|'.join([f, first71])
+        print(towrite)
+        data.write(towrite)
     i+=1
     if i == 3:
         break
-    
+
+for di in dirs:
+    print('Dir : ' + d)
+
+file.close()
+data.close()
 
